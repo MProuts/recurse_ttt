@@ -20,24 +20,26 @@ class HumanPlayer
     move = nil
     while move.nil?
       user_input = ui.fetch_move(state.board_string)
-      move = parse_int(user_input)
+      parsed_move = parse_int(user_input)
 
-      if error = state.move_error(move)
+      if error = state.move_error(parsed_move)
         full_message = "Invalid move #{user_input.inspect} - #{error}."
-        ui.print_message(full_message)
-        return
+        ui.show_error(full_message)
+        next
       end
+      move = parsed_move
     end
 
-    return state.apply(move, letter)
+    updated_state = state.apply(move, letter)
+    ui.show_move(updated_state.board_string)
+
+    return updated_state
   end
 
   def conclude(state)
     if state.winner?
       ui.congratulate_winner(state.winner, state.board_string)
-    end
-
-    if !state.available_moves?
+    elsif !state.available_moves?
       ui.announce_draw
     end
 

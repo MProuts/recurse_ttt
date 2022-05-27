@@ -10,7 +10,8 @@ ruby tic_tac_toe.rb
 ## Future Improvements 🧹
 
 - Add tests
-- Add a spinner to simulate waiting for computer player
+- Create a builder for `TicTacToe` to simplify initialization
+- Ask if player wants to play again
 - Create a `SmartMovePlayer`
     - https://en.wikipedia.org/wiki/Tic-tac-toe#Strategy
-- Create a builder for `TicTacToe` to simplify initialization
+- Add a `GUI` -- React?

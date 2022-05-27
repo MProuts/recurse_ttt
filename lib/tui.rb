@@ -20,18 +20,30 @@ class TUI
 
   def fetch_move(board_string)
     print_board(board_string)
-    print('Your move. [1-9] ---> ')
+    print('Your turn. [1-9] ---> ')
 
     get_user_input
+  end
+
+  def show_error(msg)
+    print_message(msg)
+  end
+
+  def show_move(board_string)
+    print_board(board_string)
+    print_message('Waiting for opponent...')
+    show_spinner
   end
 
   def congratulate_winner(winner, board_string)
     print_board(board_string)
     print_message("#{winner.inspect} wins!")
+    pause
   end
 
   def announce_draw
     print_message("That's a draw.")
+    pause
   end
 
   def farewell
