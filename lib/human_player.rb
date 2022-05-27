@@ -1,31 +1,25 @@
+require_relative './player'
+
 class HumanPlayer
-  # TODO: DRY this out
-  LETTERS = [ 'x', 'o' ]
+  include Player
 
-  attr_accessor :letter
-
-  def initialize(options)
-    @letter = options[:letter]
-    validate_letter!
-  end
-
-  # Human player interface
   def prepare(first_letter)
-    puts # Add a line at the top so first message stands out
+    puts # Adds a line at the top so first message stands out
     welcome_user
+    pause
     cointoss(first_letter)
+    pause
   end
 
-  # Player interface
   def take_turn(state)
     move = nil
     move = fetch_move(state) while move.nil?
     return state.apply(move, letter)
   end
 
-  # Human player interface
   def conclude(state)
     if state.winner?
+      print_board(state)
       print_message("#{state.winner.inspect} wins!")
     end
     if !state.available_moves?
@@ -37,14 +31,8 @@ class HumanPlayer
   private
 
   def pause
-    gets("[any key]")
-  end
-
-  # TODO: Move to GameState?
-  def validate_letter!
-    if !LETTERS.include?(letter)
-      raise ArgumentError, "Argument #{letter.inspect} not in: #{LETTERS.inspect}"
-    end
+    puts("[Enter]")
+    gets
   end
 
   def welcome_user
@@ -76,8 +64,6 @@ class HumanPlayer
 
   def print_board(state)
     puts <<~OUTPUT
-      Your move. [1-9]
-
       #{state.board_string}
 
     OUTPUT
@@ -96,29 +82,30 @@ class HumanPlayer
     OUTPUT
   end
 
-  def parse_int(user_input)
-    Integer(user_input)
-  rescue ArgumentError
-    nil
+  def prompt_message(message)
+    puts message
   end
 
+  # add optional block to state methods
   def fetch_move(state)
     print_board(state)
+    print('Your move. [1-9] ---> ')
+
     user_input = get_user_input
     move = parse_int(user_input)
     if !move 
       print_message("Invalid move #{user_input.inspect} - must be an integer.")
-      false
+      return
     end
 
     if !state.in_range?(move)
       print_message("Invalid move #{user_input.inspect} - must be an between 1 and 9.")
-      false
+      return
     end
 
     if !state.available?(move)
       print_message("Invalid move #{user_input.inspect} - that space is already occupied.")
-      false
+      return
     end
 
     move

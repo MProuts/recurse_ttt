@@ -13,8 +13,6 @@
 # 6 7 o
 #
 class GameState
-  # TODO: DRY this out
-  LETTERS = [ 'x', 'o' ]
   POSITIONS = (1..9)
   # Winning indexes
   WINDEXES = [

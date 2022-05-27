@@ -8,9 +8,13 @@ class TicTacToe
   attr_reader :state, :human, :computer
 
   def initialize(options)
-    @state = GameState.new()
     @human    = options[:human]
     @computer = options[:computer]
+    if @human.letter == @computer.letter
+      raise ArgumentError, "Players must have different letters"
+    end
+
+    @state = GameState.new()
 
     # private
     @_turn_enumerator = [ @human, @computer ].shuffle.cycle
@@ -19,7 +23,6 @@ class TicTacToe
   def play
     # Need to prepare computer first so it's letter is set
     # TODO: more robust way to enforce this order
-    computer.prepare(human.letter)
     human.prepare(peek_next_player.letter)
     while !state.winner && state.available_moves?
       self.state = next_player.take_turn(state)
@@ -46,8 +49,8 @@ class TicTacToe
 end
 
 ttt = TicTacToe.new(
-  human: HumanPlayer.new(letter: 'x'),
-  computer: RandomMovePlayer.new,
+  human: HumanPlayer.new(letter: 'X'),
+  computer: RandomMovePlayer.new(letter: 'Ø'),
 )
 
 ttt.play
