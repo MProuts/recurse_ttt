@@ -17,8 +17,10 @@ class TicTacToe
   end
 
   def play
-    human.prepare
+    # Need to prepare computer first so it's letter is set
+    # TODO: more robust way to enforce this order
     computer.prepare(human.letter)
+    human.prepare(peek_next_player.letter)
     while !state.winner
       self.state = next_player.take_turn(state)
     end
@@ -33,17 +35,12 @@ class TicTacToe
 
   attr_writer :state, :human, :computer
 
-  def next_player
-    human
-    # @_turn_enumerator.next
+  def peek_next_player
+    @_turn_enumerator.peek
   end
 
-  private
-
-  def debug(str)
-    if ENV['DEBUG'] == 'true'
-      puts "#{str}: #{instance_eval(str).inspect}"
-    end
+  def next_player
+    @_turn_enumerator.next
   end
 
 end

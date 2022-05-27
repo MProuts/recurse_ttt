@@ -9,31 +9,62 @@ class HumanPlayer
     validate_letter!
   end
 
-  def prepare
+  # Human player interface
+  def prepare(first_letter)
+    puts # Add a line at the top so first message stands out
     welcome_user
+    cointoss(first_letter)
   end
 
-  def welcome_user
-    puts
-    print_message("Welcome to Tic-Tac-Toe!")
-    print_message("Your letter is '#{@letter}'.")
-  end
-  
+  # Player interface
   def take_turn(state)
     move = nil
     move = fetch_move(state) while move.nil?
     return state.apply(move, letter)
   end
 
+  # Human player interface
   def conclude(winner)
-    print_message("#{winner} wins!")
+    print_message("#{winner.inspect} wins!")
   end
 
   private
 
+  def pause
+    gets("[any key]")
+  end
+
+  # TODO: Move to GameState?
   def validate_letter!
     if !LETTERS.include?(letter)
       raise ArgumentError, "Argument #{letter.inspect} not in: #{LETTERS.inspect}"
+    end
+  end
+
+  def welcome_user
+    print_message("Welcome to Tic-Tac-Toe!")
+    print_message("Your letter is #{letter.inspect}.")
+  end
+
+  def cointoss(first_letter)
+    print_message("Cointoss...")
+    print_spinner
+    print_message("#{first_letter.inspect} goes first.")
+  end
+
+  # Hat tip: https://rosettacode.org/wiki/Spinning_rod_animation/Text#Ruby
+  def print_spinner(seconds = 2)
+    begin
+      printf("\033[?25l") # Hide cursor
+      seconds.times do
+        %w[| / - \\].each do |rod|
+          print rod
+          sleep 0.25
+          print "\b"
+        end
+      end
+    ensure
+      printf("\033[?25h") # Restore cursor
     end
   end
 
