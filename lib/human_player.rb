@@ -7,7 +7,6 @@ class HumanPlayer
   def initialize(options)
     @letter = options[:letter]
     @ui     = options[:ui_class].new(self)
-
     validate_letter!(@letter)
   end
 
@@ -18,21 +17,10 @@ class HumanPlayer
 
   def take_turn(state)
     move = nil
-    while move.nil?
-      user_input = ui.fetch_move(state.board_string)
-      parsed_move = parse_int(user_input)
-
-      if error = state.move_error(parsed_move)
-        full_message = "Invalid move #{user_input.inspect} - #{error}."
-        ui.show_error(full_message)
-        next
-      end
-      move = parsed_move
-    end
+    move = fetch_move(state) while move.nil?
 
     updated_state = state.apply(move, letter)
     ui.show_move(updated_state.board_string)
-
     return updated_state
   end
 
@@ -42,12 +30,22 @@ class HumanPlayer
     elsif !state.available_moves?
       ui.announce_draw
     end
-
     ui.farewell
   end
 
   private
 
   attr_reader :ui
+
+  def fetch_move(state)
+    user_input = ui.fetch_move(state.board_string)
+    parsed_move = parse_int(user_input)
+    if error = state.move_error(parsed_move)
+      full_message = "Invalid move #{user_input.inspect} - #{error}."
+      ui.show_error(full_message)
+      return
+    end
+    parsed_move
+  end
 
 end
