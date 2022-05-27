@@ -1,19 +1,21 @@
-# Require everything in lib/
-Dir["./lib/*.rb"].each {|file| require file }
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require 'player'
+require 'human_player'
+require 'random_move_player'
+require 'game_state'
+require 'tui'
 
-# Responsible for orchestrating between players and state
+# TicTacToe is the main application class. It's responsible for kicking things
+# off and coordinating between players and state.
 #
-# Roles: Playable
+# Roles: Playable?
 class TicTacToe
   attr_reader :state, :human, :computer
 
   def initialize(options)
     @human    = options[:human]
     @computer = options[:computer]
-    if @human.letter == @computer.letter
-      raise ArgumentError, "Players must have different letters"
-    end
-
+    validate_players!
     @state = GameState.new()
 
     # private
@@ -21,22 +23,23 @@ class TicTacToe
   end
 
   def play
-    # Need to prepare computer first so it's letter is set
-    # TODO: more robust way to enforce this order
-    human.prepare(peek_next_player.letter)
+    first_letter = peek_next_player.letter
+    human.prepare(first_letter)
     while !state.winner && state.available_moves?
       self.state = next_player.take_turn(state)
     end
     human.conclude(state)
   end
 
-  def play_turn
-    next_player.take_turn(self)
-  end
-
   private
 
   attr_writer :state, :human, :computer
+
+  def validate_players!
+    if @human.letter == @computer.letter
+      raise ArgumentError, "Players must have different letters"
+    end
+  end
 
   def peek_next_player
     @_turn_enumerator.peek
@@ -49,7 +52,10 @@ class TicTacToe
 end
 
 ttt = TicTacToe.new(
-  human: HumanPlayer.new(letter: 'X'),
+  human: HumanPlayer.new(
+    letter: 'X',
+    ui_class: TUI,
+  ),
   computer: RandomMovePlayer.new(letter: 'Ø'),
 )
 

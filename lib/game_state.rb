@@ -5,16 +5,15 @@
 # 4 5 6
 # 7 8 9
 #
-# As moves are taken, the numbers are replaced with x's and o's. After two turns
-# the board might look like this:
+# As moves are taken, the numbers are replaced with the players' respective
+# letters. After two turns the board might look like this:
 #
-# 1 2 x
+# 1 2 X
 # 3 4 5
-# 6 7 o
-#
+# 6 7 Ø
 class GameState
   POSITIONS = (1..9)
-  # Winning indexes
+  # Winning indexes (not to be confused with window spray)
   WINDEXES = [
     # Rows
     [ 0, 1, 2 ],
@@ -42,8 +41,24 @@ class GameState
     rows.join("\n")
   end
 
+  def move_error(move)
+    if !move 
+      return "must be an integer"
+    end
+    if !in_range?(move)
+      return "must be an between 1 and 9"
+    end
+    if !available?(move)
+      return "that space is already occupied"
+    end
+  end
+
   def in_range?(move)
     POSITIONS.include?(move)
+  end
+
+  def available?(move)
+    available_moves.include?(move)
   end
 
   def available_moves
@@ -54,10 +69,6 @@ class GameState
     !available_moves.empty?
   end
 
-  def available?(move)
-    available_moves.include?(move)
-  end
-
   def apply(move, letter)
     next_state = self.dup
     index = move - 1
@@ -65,14 +76,14 @@ class GameState
     next_state
   end
 
-  def wins
+  def possible_wins
     WINDEXES.map do |indexes|
       board.values_at(*indexes)
     end
   end
 
   def winner
-    win = wins.find { |win| win.uniq.size == 1 }
+    win = possible_wins.find { |win| win.uniq.size == 1 }
     win && win.first
   end
 
@@ -92,10 +103,4 @@ class GameState
     end
   end
 
-  # TODO: add letter as parameter?
-  #
-  # @param move [Integer] number representing space to fill on board
-  # @return [GameState] new state with move applied
-  # def apply_move(move)
-  # end
 end

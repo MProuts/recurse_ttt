@@ -1,11 +1,6 @@
 module Player
   attr_accessor :letter
 
-  def initialize(options)
-    @letter = options[:letter]
-    validate_letter!(@letter)
-  end
-
   def take_turn(state)
     raise NotImplementedError, "This #{self.class} cannot respond to `#{__callee__}`"
   end
