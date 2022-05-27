@@ -21,10 +21,10 @@ class TicTacToe
     # TODO: more robust way to enforce this order
     computer.prepare(human.letter)
     human.prepare(peek_next_player.letter)
-    while !state.winner
+    while !state.winner && state.available_moves?
       self.state = next_player.take_turn(state)
     end
-    human.conclude(state.winner)
+    human.conclude(state)
   end
 
   def play_turn

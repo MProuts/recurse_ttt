@@ -16,6 +16,7 @@ class GameState
   # TODO: DRY this out
   LETTERS = [ 'x', 'o' ]
   POSITIONS = (1..9)
+  # Winning indexes
   WINDEXES = [
     # Rows
     [ 0, 1, 2 ],
@@ -29,8 +30,6 @@ class GameState
     [ 0, 4, 8 ],
     [ 2, 4, 6 ],
   ]
-
-  attr_accessor :board
 
   def initialize()
     @board = POSITIONS.to_a
@@ -51,6 +50,10 @@ class GameState
 
   def available_moves
     board.select { |move| move.is_a? Integer }
+  end
+
+  def available_moves?
+    !available_moves.empty?
   end
 
   def available?(move)
@@ -74,6 +77,14 @@ class GameState
     win = wins.find { |win| win.uniq.size == 1 }
     win && win.first
   end
+
+  def winner?
+    !winner.nil?
+  end
+
+  protected
+
+  attr_accessor :board
 
   private
 

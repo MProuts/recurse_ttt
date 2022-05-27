@@ -24,8 +24,14 @@ class HumanPlayer
   end
 
   # Human player interface
-  def conclude(winner)
-    print_message("#{winner.inspect} wins!")
+  def conclude(state)
+    if state.winner?
+      print_message("#{state.winner.inspect} wins!")
+    end
+    if !state.available_moves?
+      print_message("That's a draw.")
+    end
+    print_message("Bye for now.")
   end
 
   private
