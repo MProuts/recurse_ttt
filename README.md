@@ -10,7 +10,7 @@ Feel free to an open issue if you encounter any bugs.
 ## To run 🏃‍♀️
 
 ```sh
-cd ttt-recurse
+cd recurse_ttt
 ruby tic_tac_toe.rb
 ```
 
