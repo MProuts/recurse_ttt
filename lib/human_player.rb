@@ -1,6 +1,10 @@
 require 'player'
 
-# Responsible for coordinating between UI and game state
+# A HumanPlayer coordinates between the UI and game state. It instructs the UI
+# to print messages based on game lifecycle, parses and validates user input,
+# and applies valid moves to the game.
+#
+# Role: Player
 class HumanPlayer
   include Player
 

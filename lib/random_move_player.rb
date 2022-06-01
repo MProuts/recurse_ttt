@@ -1,5 +1,8 @@
 require 'player'
 
+# RandomMovePlayer is a computer player that takes random moves.
+#
+# Role: Player
 class RandomMovePlayer
   include Player
 

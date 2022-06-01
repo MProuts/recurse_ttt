@@ -1,3 +1,6 @@
+# Player is an abstract module representing the Player interface
+#
+# Role: Player
 module Player
   attr_accessor :letter
 

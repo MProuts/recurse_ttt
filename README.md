@@ -1,5 +1,12 @@
 # Tic Tac Toe
 
+A basic text-based implementation of Tic-Tac-Toe.
+
+I just re-read POODR by Sandi Metz, so I tried to apply concepts from that book
+along the way.
+
+Feel free to open issues on this repo if you encounter any bugs.
+
 ## To run 🏃‍♀️
 
 ```sh

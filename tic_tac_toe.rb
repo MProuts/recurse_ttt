@@ -7,8 +7,6 @@ require 'tui'
 
 # TicTacToe is the main application class. It's responsible for kicking things
 # off and coordinating between players and state.
-#
-# Roles: Playable?
 class TicTacToe
   attr_reader :state, :human, :computer
 

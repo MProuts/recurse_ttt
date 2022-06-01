@@ -1,5 +1,5 @@
-# Represents a tic-tac-toe game at a moment in time between turns. The numbers
-# 1-9 represent blank spaces on a board numbered as follows:
+# GameState represents a tic-tac-toe game at a moment in time between turns. The
+# numbers 1-9 represent blank spaces on a board numbered as follows:
 #
 # 1 2 3
 # 4 5 6

@@ -1,3 +1,7 @@
+# TUI is a textual user interface for tic-tac-toe that prints messages and
+# receives user input.
+#
+# Role: UI
 class TUI
 
   def initialize(player)
