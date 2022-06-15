@@ -2,7 +2,7 @@
 
 A basic text-based implementation of Tic-Tac-Toe.
 
-I just re-read POODR by Sandi Metz, so I tried to apply concepts from that book
+I just re-read [POODR](https://www.poodr.com/), so I tried to apply concepts from that book
 along the way.
 
 Feel free to an open issue if you encounter any bugs.
@@ -10,7 +10,7 @@ Feel free to an open issue if you encounter any bugs.
 ## To run 🏃‍♀️
 
 ```sh
-cd ttt-recurse
+cd recurse_ttt
 ruby tic_tac_toe.rb
 ```
 
