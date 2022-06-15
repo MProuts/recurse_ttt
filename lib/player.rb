@@ -4,6 +4,17 @@
 module Player
   attr_accessor :letter
 
+  def initialize(options)
+    @letter = options[:letter]
+    validate_letter!(@letter)
+
+    post_initialize(options)
+  end
+
+  def post_initialize(options)
+    # optional hook
+  end
+
   def take_turn(state)
     raise NotImplementedError, "This #{self.class} cannot respond to `#{__callee__}`"
   end

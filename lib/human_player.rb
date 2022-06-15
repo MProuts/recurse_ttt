@@ -8,10 +8,8 @@ require 'player'
 class HumanPlayer
   include Player
 
-  def initialize(options)
-    @letter = options[:letter]
-    @ui     = options[:ui_class].new(self)
-    validate_letter!(@letter)
+  def post_initialize(options)
+    @ui = options[:ui_class].new(self)
   end
 
   def prepare(first_letter)
