@@ -1,6 +1,8 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 $LOAD_PATH.unshift File.expand_path("../doubles", __FILE__)
 
+ENV['APPLICATION_ENV'] = 'test'
+
 # Require everything in lib/
 Dir["./lib/*.rb"].each {|file| require file }
 

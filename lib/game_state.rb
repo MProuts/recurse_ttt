@@ -12,9 +12,11 @@
 # 3 4 5
 # 6 7 Ø
 class GameState
+  attr_accessor :board
+
   POSITIONS = (1..9)
-  # Winning indexes (not to be confused with window spray)
-  WINDEXES = [
+  # Indexes of horizontal, vertical, and diagonal lines
+  LINE_INDEXES = [
     # Rows
     [ 0, 1, 2 ],
     [ 3, 4, 5 ],
@@ -28,8 +30,8 @@ class GameState
     [ 2, 4, 6 ],
   ]
 
-  def initialize()
-    @board = POSITIONS.to_a
+  def initialize(board=nil)
+    @board = board || POSITIONS.to_a
   end
 
   def rows
@@ -76,24 +78,20 @@ class GameState
     next_state
   end
 
-  def possible_wins
-    WINDEXES.map do |indexes|
+  def lines
+    LINE_INDEXES.map do |indexes|
       board.values_at(*indexes)
     end
   end
 
   def winner
-    win = possible_wins.find { |win| win.uniq.size == 1 }
+    win = lines.find { |line| line.uniq.size == 1 }
     win && win.first
   end
 
   def winner?
     !winner.nil?
   end
-
-  protected
-
-  attr_accessor :board
 
   private
 

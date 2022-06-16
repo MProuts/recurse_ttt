@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require 'player'
 require 'human_player'
+require 'smart_player'
 require 'random_move_player'
 require 'game_state'
 require 'tui'
@@ -54,7 +55,7 @@ ttt = TicTacToe.new(
     letter: 'X',
     ui_class: TUI,
   ),
-  computer: RandomMovePlayer.new(letter: 'Ø'),
+  computer: SmartPlayer.new(letter: 'Ø'),
 )
 
 ttt.play
