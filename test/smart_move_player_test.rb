@@ -14,7 +14,10 @@ class SmartPlayerTest < Minitest::Test
 
   describe "#move" do
     before do
-      @player = SmartPlayer.new(letter: 'X')
+      @player = SmartPlayer.new(
+        letter: 'X',
+        opponent_letter: 'Ø',
+      )
     end
 
     wins = <<~TEXT

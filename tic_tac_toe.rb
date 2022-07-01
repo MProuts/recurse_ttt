@@ -53,9 +53,13 @@ end
 ttt = TicTacToe.new(
   human: HumanPlayer.new(
     letter: 'X',
+    opponent_letter: 'Ø',
     ui_class: TUI,
   ),
-  computer: SmartPlayer.new(letter: 'Ø'),
+  computer: SmartPlayer.new(
+    letter: 'Ø',
+    opponent_letter: 'X',
+  ),
 )
 
 ttt.play

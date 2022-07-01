@@ -2,11 +2,13 @@
 #
 # Role: Player
 module Player
-  attr_accessor :letter
+  attr_accessor :letter, :opponent_letter
 
   def initialize(options)
     @letter = options[:letter]
     validate_letter!(@letter)
+    @opponent_letter = options[:opponent_letter]
+    validate_letter!(@opponent_letter)
 
     post_initialize(options)
   end
