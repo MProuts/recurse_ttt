@@ -44,7 +44,7 @@ class GameState
   end
 
   def move_error(move)
-    if !move 
+    if !move
       return "must be an integer"
     end
     if !in_range?(move)
